@@ -26,16 +26,16 @@ public class EntityFactory {
         Map<String, Color> shipColors = gameConfiguration.getShipColors();
         Map<String, BulletType> bulletTypes = gameConfiguration.getBulletTypes();
         for (int i = 1; i < amountOfShips+1; i++) {
-            String id = "starship_" + i;
+            String id = "starship-" + i;
             double xPosition =((GAME_WIDTH / amountOfShips) * i) /2;
             Player player = players.get(i-1);
-            Starship starship = new Starship(id, xPosition, 300, SHIP_ROTATION_Y, SHIP_HEIGHT, SHIP_WIDTH, player.getId(), shipColors.get("color_" + i), System.currentTimeMillis(), SHIP_DIRECTION,0, bulletTypes.get("bulletType_" + i));
+            Starship starship = new Starship(id, xPosition, 300, SHIP_ROTATION_Y, SHIP_HEIGHT, SHIP_WIDTH, player.getId(), shipColors.get("color-" + i), System.currentTimeMillis(), SHIP_DIRECTION, 0, bulletTypes.get("bulletType-" + i));
             objects.add(starship);
         }
     }
 
     public static Bullet generateBullet(Starship ship){
-        String id = "bullet_" + ++ BULLET_COUNT;
+        String id = "bullet-" + ++ BULLET_COUNT;
         Random random = new Random();
         double n = 2 + (5 - 2) * random.nextDouble();
         return switch (ship.getBulletType()) {
@@ -47,14 +47,6 @@ public class EntityFactory {
         };
     }
 
-    public static List<Player> generatePlayer(GameConfiguration gameConfiguration){
-        int amount = gameConfiguration.getPlayers_quantity();
-        List<Player> players = new ArrayList<>();
-        for (int i = 0; i < amount; i++) {
-            players.add(new Player("player_" + i, gameConfiguration.getAmountOfLives(), "starship_" + i+1));
-        }
-        return players;
-    }
 
     public static void manageAsteroidGeneration(List<Asteroid> asteroids, List<Entity> gameObjects){
         //adds asteroids if there are less than 5 on screen

@@ -2,6 +2,7 @@ import config.GameConfiguration;
 import config.GameState;
 import config.ReaderSaverManager;
 import factory.EntityFactory;
+import factory.PlayerFactory;
 import javafx.scene.input.KeyCode;
 import model.Asteroid;
 import model.Entity;
@@ -49,7 +50,7 @@ public class Game {
         this.gameState = ReaderSaverManager.getSavedGameState();
     }
     private void loadNewGame(){
-        List<Player> players = EntityFactory.generatePlayer(gameConfiguration);
+        List<Player> players = PlayerFactory.generate(gameConfiguration);
         this.gameState = new GameState(EntityFactory.generate(players.size(), players, gameConfiguration), players);
     }
     public void sumPoints(String playerId, int points){

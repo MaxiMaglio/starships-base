@@ -9,7 +9,7 @@ public class Constants {
 
     //GAME CONFIGURATION
     public static final List<String> LINES = getLines("app/src/main/java/config/GameConfiguration");
-    public static final String DIRECTORY = "app/src/main/java/config/Reader.java";
+    public static final String DIRECTORY = "app/src/main/java/config/config";
 
     public static final double GAME_WIDTH = 1000;
     public static final double GAME_HEIGHT = 1000;

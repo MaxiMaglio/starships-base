@@ -19,12 +19,15 @@ public class ReaderSaverManager extends Reader{
     }
 
     private static void writeGameStateInFile(List<Entity> gameObjects, List<Player> players){
-        try(BufferedWriter writer = new BufferedWriter(new FileWriter(DIRECTORY))){
+        try(BufferedWriter writer = new BufferedWriter(new FileWriter(getDirectory()))){
             writeGameObjects(gameObjects, writer);
             writePlayers(players, writer);
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+    private static String getDirectory(){
+        return "app/src/main/java/config/config";
     }
 
     private static void writeGameObjects(List<Entity> entities, BufferedWriter writer) throws IOException {
