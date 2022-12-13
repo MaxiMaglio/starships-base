@@ -10,13 +10,13 @@ public class Asteroid extends Entity {
     private final int initialHealthBar;
     private final int currentHealthBar;
 
-    public Asteroid(String id, double positionX, double positionY, double rotation, double height, double width, double direction, boolean clockwise, int initialHealthBar, int currentHealthBar) {
+    public Asteroid(String id, double positionX, double positionY, double rotation, double height, double width, double direction, boolean clockwise,
+                    int initialHealthBar, int currentHealthBar) {
         super(id, EntityType.ASTEROID, EntityShapeType.ELLIPTICAL, positionX, positionY, rotation,  direction, height, width);
         this.clockwise = clockwise;
         this.initialHealthBar = initialHealthBar;
         this.currentHealthBar = currentHealthBar;
     }
-
 
     @Override
     public Entity update() {

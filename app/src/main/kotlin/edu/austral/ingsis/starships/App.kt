@@ -7,9 +7,13 @@ import edu.austral.ingsis.starships.ui.*
 import edu.austral.ingsis.starships.ui.ElementColliderType.*
 import javafx.application.Application
 import javafx.application.Application.launch
+import javafx.event.ActionEvent
+import javafx.event.EventHandler
 import javafx.geometry.Pos
 import javafx.scene.Cursor
 import javafx.scene.Scene
+import javafx.scene.control.Button
+import javafx.scene.control.ChoiceBox
 import javafx.scene.control.Label
 import javafx.scene.input.KeyCode
 import javafx.scene.layout.HBox
@@ -30,7 +34,7 @@ fun main() {
     launch(Starships::class.java)
 }
 
-class Starships() : Application() {
+class Starships : Application() {
     private val imageResolver = CachedImageResolver(DefaultImageResolver())
     private val facade = ElementsViewFacade(imageResolver)
     private val keyTracker = KeyTracker()
@@ -84,6 +88,19 @@ class Starships() : Application() {
         keyTracker.start()
         primaryStage.show()
     }
+    override fun stop() {
+        facade.stop()
+        keyTracker.stop()
+        exitProcess(0)
+    }
+
+    fun adaptShape(shape : EntityShapeType) : ElementColliderType{
+        return when(shape){
+            EntityShapeType.RECTANGULAR -> Rectangular
+            EntityShapeType.ELLIPTICAL -> Elliptical
+            EntityShapeType.TRIANGULAR -> Triangular
+        }
+    }
 
     private fun mainGameScene(): StackPane {
         val pane = StackPane()
@@ -96,21 +113,58 @@ class Starships() : Application() {
     private fun addGameObjects(){
         val gameObjects = game.entities
         for (gameObject in gameObjects){
-            facade.elements[gameObject.id] = ElementModel(gameObject.id, gameObject.getxPosition(), gameObject.getyPosition(), gameObject.height,
-                gameObject.width, gameObject.rotation, adaptShape(gameObject.shapeType), getImage(gameObject))
+            facade.elements[gameObject.id] = ElementModel(gameObject.id, gameObject.getxPosition(), gameObject.getyPosition(),
+                gameObject.height, gameObject.width, gameObject.rotation, adaptShape(gameObject.shapeType), getImage(gameObject))
         }
     }
 
+    fun getImage(gameObject: Entity) : ImageRef {
+        if (gameObject.type == EntityType.STARSHIP) {
+            if (gameObject is Starship) {
+                return when (gameObject.color) {
+                    Color.RED -> STARSHIP_RED
+                    Color.BLUE -> STARSHIP_BLUE
+                    else -> STARSHIP_GREEN
+                }
+            }
+        }
 
-
-
-
-    override fun stop() {
-        facade.stop()
-        keyTracker.stop()
-        exitProcess(0)
+        if (gameObject.type == EntityType.BULLET) {
+            if (gameObject is Bullet) {
+                val type = gameObject.bulletType;
+                when (gameObject.color) {
+                    Color.RED -> {
+                        return when (type) {
+                            BulletType.BULLET -> BULLET_RED
+                            BulletType.LASER -> BULLET_LASER_RED
+                            BulletType.ROCKET -> BULLET_ROCKET_RED
+                            BulletType.SUPA_ROCKET -> BULLET_SUPA_ROCKET_RED
+                            else -> BULLET_CUSTOM
+                        }
+                    }
+                    Color.BLUE -> {
+                        return when (type) {
+                            BulletType.BULLET -> BULLET_BLUE
+                            BulletType.LASER -> BULLET_LASER_BLUE
+                            BulletType.ROCKET -> BULLET_ROCKET_BLUE
+                            BulletType.SUPA_ROCKET -> BULLET_SUPA_ROCKET_BLUE
+                            else -> BULLET_CUSTOM
+                        }
+                    }
+                    else -> {
+                        return when (type) {
+                            BulletType.BULLET -> BULLET_GREEN
+                            BulletType.LASER -> BULLET_LASER_GREEN
+                            BulletType.ROCKET -> BULLET_ROCKET_GREEN
+                            BulletType.SUPA_ROCKET -> BULLET_SUPA_ROCKET_GREEN
+                            else -> BULLET_CUSTOM
+                        }
+                    }
+                }
+            }
+        }
+        return ASTEROID
     }
-
 
 
 private fun menuScene(primaryStage: Stage, pane: StackPane): Scene {
@@ -118,12 +172,23 @@ private fun menuScene(primaryStage: Stage, pane: StackPane): Scene {
     title.textFill = PURPLE
     title.style = "-fx-font-family: VT323; -fx-font-size: 100;"
 
+    val choiceBox = ChoiceBox<String>()
+
+    val bulletTypesMap = game.gameConfiguration.bulletTypes
+
+    for ((key,values) in bulletTypesMap.entries){
+        choiceBox.items.add(key)
+    }
+    //Set a default bullet type
+    choiceBox.value = "Choose a bullet type"
+
     val newGame = Label("New Game")
     newGame.textFill = javafx.scene.paint.Color.BLUE
     newGame.style = "-fx-font-family: VT323; -fx-font-size: 50"
     newGame.setOnMouseClicked {
         primaryStage.scene.root = pane
-        game.start(false)
+
+        game.start(false, choiceBox.value)    //TODO: que se puedan pasar parametros para elegir las armas
         addGameObjects()
     }
 
@@ -141,7 +206,7 @@ private fun menuScene(primaryStage: Stage, pane: StackPane): Scene {
     loadGame.style = "-fx-font-family: VT323; -fx-font-size: 50;"
     loadGame.setOnMouseClicked {
         primaryStage.scene.root = pane
-        game.start(true)
+        game.start(true, "bulletType-1")
         addGameObjects()
     }
     loadGame.setOnMouseEntered {
@@ -155,7 +220,7 @@ private fun menuScene(primaryStage: Stage, pane: StackPane): Scene {
 
     val newAndLoadGame = HBox(70.0)
     newAndLoadGame.alignment = Pos.CENTER
-    newAndLoadGame.children.addAll(newGame, loadGame)
+    newAndLoadGame.children.addAll(newGame, loadGame, choiceBox)
 
     val verticalLayout = VBox(50.0)
     verticalLayout.id = "menu"
@@ -240,95 +305,42 @@ fun pauseScene(primaryStage: Stage, pane: StackPane, menu: Scene): Scene {
 }
 
 
-
-fun adaptShape(shape : EntityShapeType) : ElementColliderType{
-    return when(shape){
-        EntityShapeType.RECTANGULAR -> Rectangular
-        EntityShapeType.ELLIPTICAL -> Elliptical
-        EntityShapeType.TRIANGULAR -> Triangular
-    }
-}
-
-fun getImage(gameObject: Entity) : ImageRef? {
-    if (gameObject.type == EntityType.STARSHIP) {
-        if (gameObject is Starship) {
-            return when (gameObject.color) {
-                Color.RED -> STARSHIP_RED
-                Color.BLUE -> STARSHIP_BLUE
-                else -> STARSHIP_GREEN
+    class TimeListener(
+        private val elements: Map<String, ElementModel>,
+        private val game: Game,
+        private val facade: ElementsViewFacade,
+        private val starships: Starships
+    ) : EventListener<TimePassed> {
+        override fun handle(event: TimePassed) {
+            if(game.hasFinished()) {
+                game.printLeaderBoard()
+                starships.stop()
             }
-        }
-    }
+            game.update()
+            val gameObjects = game.entities ?: return;
+            for (gameObject in gameObjects){
+                val element = elements[gameObject.id]
+                if (element != null) {
+                    element.x.set(gameObject.getxPosition())
+                    element.y.set(gameObject.getyPosition())
+                    element.rotationInDegrees.set(gameObject.rotation)
+                    element.height.set(gameObject.height)
+                    element.width.set(gameObject.width)
+                }
+                else{
+                    facade.elements[gameObject.id] = ElementModel(gameObject.id, gameObject.getxPosition(), gameObject.getyPosition(), gameObject.height, gameObject.width, gameObject.rotation,
+                        starships.adaptShape(gameObject.shapeType), starships.getImage(gameObject))
+                }
+            }
+            val eliminations = game.eliminated;
 
-    if (gameObject.type == EntityType.BULLET) {
-        if (gameObject is Bullet) {
-            val type = gameObject.bulletType;
-            when (gameObject.color) {
-                Color.RED -> {
-                    when (type) {
-                        BulletType.BULLET -> BULLET_RED
-                        BulletType.LASER -> BULLET_LASER_RED
-                        BulletType.ROCKET -> BULLET_ROCKET_RED
-                        BulletType.SUPA_ROCKET -> BULLET_SUPA_ROCKET_RED
-                        else -> BULLET_CUSTOM
-                    }
-                }
-                Color.BLUE -> {
-                    when (type) {
-                        BulletType.BULLET -> BULLET_BLUE
-                        BulletType.LASER -> BULLET_LASER_BLUE
-                        BulletType.ROCKET -> BULLET_ROCKET_BLUE
-                        BulletType.SUPA_ROCKET -> BULLET_SUPA_ROCKET_BLUE
-                        else -> BULLET_CUSTOM
-                    }
-                }
-                else -> {
-                    when (type) {
-                        BulletType.BULLET -> BULLET_GREEN
-                        BulletType.LASER -> BULLET_LASER_GREEN
-                        BulletType.ROCKET -> BULLET_ROCKET_GREEN
-                        BulletType.SUPA_ROCKET -> BULLET_SUPA_ROCKET_GREEN
-                        else -> BULLET_CUSTOM
-                    }
+            for (eliminated in eliminations){
+                if (elements.containsKey(eliminated)){
+                    facade.elements[eliminated] = null
                 }
             }
         }
     }
-    return ASTEROID
-}
-
-
-
-class TimeListener(private val elements: Map<String, ElementModel>, private val game: Game, private val facade: ElementsViewFacade, private val starships: Starships) : EventListener<TimePassed> {
-    override fun handle(event: TimePassed) {
-
-        if (game.hasFinished()) {
-            game.printLeaderBoard()
-            starships.stop()
-        }
-        game.update()
-        val gameObjects = game.entities ?: return;
-        for (entity in gameObjects){
-            val element = elements[entity.id]
-            if (element != null){
-                element.x.set(entity.getxPosition())
-                element.y.set(entity.getyPosition())
-                element.rotationInDegrees.set(entity.rotation)
-                element.height.set(entity.height)
-                element.width.set(entity.width)
-            }
-            else{
-                facade.elements[entity.id] = ElementModel(entity.id, entity.getxPosition(), entity.getyPosition(), entity.height, entity.width, entity.rotation, starships.adaptShape(entity.shapeType), starships.getImage(entity))
-            }
-        }
-        val eliminations = game.eliminated;
-        for (eliminated in eliminations){
-            if (elements.containsKey(eliminated)){
-                facade.elements[eliminated] = null
-            }
-        }
-    }
-}
 
 class CollisionListener(private val game: Game) : EventListener<Collision> {
     override fun handle(event: Collision) {
@@ -347,13 +359,13 @@ class KeyPressedListener( private val game: Game,
                     when (event.key){
                         map["accelerate-1"] -> game.moveShip("starship-1", true)
                         map["stop-1"] -> game.moveShip("starship-1", false)
-                        map["rotate-left-1"] -> game.rotateShip("starship-1", -5.0)
-                        map["rotate-right-1"] -> game.rotateShip("starship-1", 5.0)
+                        map["rotate-left-1"] -> game.rotateShip("starship-1", -20.0)
+                        map["rotate-right-1"] -> game.rotateShip("starship-1", 20.0)
                         map["shoot-1"] -> game.shoot("starship-1")
                         map["accelerate-2"] -> game.moveShip("starship-2", true)
                         map["stop-2"] -> game.moveShip("starship-2", false)
-                        map["rotate-left-2"] -> game.rotateShip("starship-2", -5.0)
-                        map["rotate-right-2"] -> game.rotateShip("starship-2", 5.0)
+                        map["rotate-left-2"] -> game.rotateShip("starship-2", -20.0)
+                        map["rotate-right-2"] -> game.rotateShip("starship-2", 20.0)
                         map["shoot-2"] -> game.shoot("starship-2")
                         KeyCode.P -> {
                             game.pauseOrResumeGame()

@@ -1,5 +1,5 @@
 players_quantity:1
-keyBoardSettings:accelerate-1=W;stop-1=S;shoot-1=Space;rotate-left-1=Left;rotate-right-1=Right;accelerate-2=T;stop-2=G;shoot-2=L;rotate-left-2=J;rotate-right-2=K
+keyBoardSettings:accelerate-1=W;stop-1=S;shoot-1=Space;rotate-left-1=A;rotate-right-1=D;accelerate-2=T;stop-2=G;shoot-2=L;rotate-left-2=J;rotate-right-2=K
 amountOfLives:3
 starships:color-1=RED;color-2=BLUE;color-3=GREEN
 bulletTypes:bulletType-1=BULLET;bulletType-2=LASER;bulletType-3=ROCKET;bulletType-4=SUPA_ROCKET;bulletType-5=CUSTOM

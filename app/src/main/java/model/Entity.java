@@ -33,8 +33,6 @@ public abstract class Entity extends Reader {
     }
 
 
-
-
     public abstract Entity update();
     public abstract Entity getNewGameObject();
 

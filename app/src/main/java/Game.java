@@ -33,9 +33,9 @@ public class Game {
         eliminated.add(id);
     }
 
-    public void start(boolean initializeFromSavedState){
+    public void start(boolean initializeFromSavedState, String bulletTypeAsString){
         if (initializeFromSavedState) loadSavedGame();
-        else loadNewGame();
+        else loadNewGame(bulletTypeAsString);
         this.isPaused = false;
         loadPlayerPoints();
     }
@@ -49,9 +49,9 @@ public class Game {
     private void loadSavedGame(){
         this.gameState = ReaderSaverManager.getSavedGameState();
     }
-    private void loadNewGame(){
+    private void loadNewGame(String bulletTypeAsString){
         List<Player> players = PlayerFactory.generate(gameConfiguration);
-        this.gameState = new GameState(EntityFactory.generate(players.size(), players, gameConfiguration), players);
+        this.gameState = new GameState(EntityFactory.generate(bulletTypeAsString, players.size(), players, gameConfiguration), players);
     }
     public void sumPoints(String playerId, int points){
         int pastPoints = playerPoints.get(playerId);
@@ -213,5 +213,9 @@ public class Game {
 
     public void saveGame(){
         ReaderSaverManager.saveGameState(gameState);
+    }
+
+    public GameConfiguration getGameConfiguration(){
+        return gameConfiguration;
     }
 }

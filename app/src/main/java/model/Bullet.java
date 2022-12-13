@@ -58,6 +58,5 @@ public class Bullet extends Entity  {
 
     @Override
     public Entity getNewGameObject() {
-        return null;
-    }
+        return new Bullet(getId(), getxPosition(),getyPosition(),getRotation(),getHeight(),getWidth(),getDirection(),getColor(),shipId, damage, bulletType);    }
 }

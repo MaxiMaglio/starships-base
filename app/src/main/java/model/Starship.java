@@ -70,7 +70,7 @@ public class Starship extends Entity {
 
     @Override
     public Entity getNewGameObject() {
-        return null;
+        return new Starship(getId(), getxPosition(), getyPosition(), getRotation(), getHeight(),getWidth(),playerId,getColor(),lastBulletShot, getDirection(), boost, bulletType);
     }
 
     public Color getColor() {

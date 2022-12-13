@@ -16,20 +16,20 @@ import static config.Constants.*;
 public class EntityFactory {
 
     static Random random = new Random();
-    public static List<Entity> generate(int amountOfShips, List<Player> players, GameConfiguration gameConfiguration){
+    public static List<Entity> generate(String bulletTypeAsString, int amountOfShips, List<Player> players, GameConfiguration gameConfiguration){
         List<Entity> objects = new ArrayList<>();
-        generateStarships(objects, amountOfShips, players, gameConfiguration);
+        generateStarships(bulletTypeAsString, objects, amountOfShips, players, gameConfiguration);
         return objects;
     }
 
-    private static void generateStarships(List<Entity> objects, int amountOfShips, List<Player> players, GameConfiguration gameConfiguration){
+    private static void generateStarships(String bulletTypeAsString, List<Entity> objects, int amountOfShips, List<Player> players, GameConfiguration gameConfiguration){
         Map<String, Color> shipColors = gameConfiguration.getShipColors();
         Map<String, BulletType> bulletTypes = gameConfiguration.getBulletTypes();
         for (int i = 1; i < amountOfShips+1; i++) {
             String id = "starship-" + i;
             double xPosition =((GAME_WIDTH / amountOfShips) * i) /2;
             Player player = players.get(i-1);
-            Starship starship = new Starship(id, xPosition, 300, SHIP_ROTATION_Y, SHIP_HEIGHT, SHIP_WIDTH, player.getId(), shipColors.get("color-" + i), System.currentTimeMillis(), SHIP_DIRECTION, 0, bulletTypes.get("bulletType-" + i));
+            Starship starship = new Starship(id, xPosition, 300, SHIP_ROTATION_Y, SHIP_HEIGHT, SHIP_WIDTH, player.getId(), shipColors.get("color-" + i), System.currentTimeMillis(), SHIP_DIRECTION, 0, bulletTypes.get(bulletTypeAsString));
             objects.add(starship);
         }
     }
