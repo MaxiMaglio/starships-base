@@ -188,7 +188,7 @@ private fun menuScene(primaryStage: Stage, pane: StackPane): Scene {
     newGame.setOnMouseClicked {
         primaryStage.scene.root = pane
 
-        game.start(false, choiceBox.value)    //TODO: que se puedan pasar parametros para elegir las armas
+        game.start(false, choiceBox.value)
         addGameObjects()
     }
 
