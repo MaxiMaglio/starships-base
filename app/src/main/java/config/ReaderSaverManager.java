@@ -136,6 +136,7 @@ public class ReaderSaverManager extends Reader{
             double height = (double) transform(parts[6]);
             double width = (double) transform(parts[7]);
             String shape = (String) transform(parts[8]);
+            //If its not a starship
             if (parts[9] != null) {
                 String color = (String) transform(parts[9]);
                 gameObjects.add(createGameObject(parts, id, type, xPosition, yPosition, rotation, direction, height, width, color));

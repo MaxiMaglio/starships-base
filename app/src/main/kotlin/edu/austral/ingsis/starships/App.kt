@@ -232,6 +232,10 @@ private fun menuScene(primaryStage: Stage, pane: StackPane): Scene {
     return menu
 }
 
+
+
+
+
 fun pauseScene(primaryStage: Stage, pane: StackPane, menu: Scene): Scene {
     val resume = Label("Resume")
     resume.textFill = javafx.scene.paint.Color.BLUE
@@ -321,9 +325,9 @@ fun pauseScene(primaryStage: Stage, pane: StackPane, menu: Scene): Scene {
             for (gameObject in gameObjects){
                 val element = elements[gameObject.id]
                 if (element != null) {
-                    element.x.set(gameObject.getxPosition())
-                    element.y.set(gameObject.getyPosition())
-                    element.rotationInDegrees.set(gameObject.rotation)
+                    element.x.set(gameObject.getxPosition() + 70)
+                    element.y.set(gameObject.getyPosition() + 70)
+                    element.rotationInDegrees.set(gameObject.rotation + 180)
                     element.height.set(gameObject.height)
                     element.width.set(gameObject.width)
                 }

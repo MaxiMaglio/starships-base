@@ -11,8 +11,8 @@ public class Constants {
     public static final List<String> LINES = getLines("app/src/main/java/config/GameConfiguration");
     public static final String DIRECTORY = "app/src/main/java/config/config";
 
-    public static final double GAME_WIDTH = 1000;
-    public static final double GAME_HEIGHT = 1000;
+    public static final double GAME_WIDTH = 1920;
+    public static final double GAME_HEIGHT = 1080;
 
 
     //SHIP CONSTANTS

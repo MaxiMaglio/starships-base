@@ -38,7 +38,7 @@ public class Starship extends Entity {
                 return new Starship(getId(), newX, newY, getRotation(), getHeight(),getWidth(),playerId,getColor(),lastBulletShot, getDirection(), boost - 5, bulletType);
             }
         }
-        return (Starship) getNewGameObject();
+        return getNewGameObject();
     }
 
     public Starship move(boolean up){

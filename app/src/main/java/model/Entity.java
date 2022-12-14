@@ -5,6 +5,7 @@ import model.enums.EntityShapeType;
 import model.enums.EntityType;
 
 import static config.Constants.GAME_HEIGHT;
+import static config.Constants.GAME_WIDTH;
 
 
 public abstract class Entity extends Reader {
@@ -37,10 +38,10 @@ public abstract class Entity extends Reader {
     public abstract Entity getNewGameObject();
 
     public boolean isInsideLimit(){
-        return xPosition > 0 && xPosition < GAME_HEIGHT && yPosition > 0 && yPosition < 800;
+        return xPosition > -75 && xPosition < GAME_WIDTH - 125 && yPosition > -75 && yPosition < GAME_HEIGHT - 150;
     }
     public boolean isInsideLimit(double xPosition, double yPosition){
-        return xPosition > 0 && xPosition < 725 && yPosition > 0 && yPosition < 700;
+        return xPosition > -75 && xPosition < GAME_WIDTH - 125 && yPosition > -75 && yPosition < GAME_HEIGHT - 150;
     }
 
 
