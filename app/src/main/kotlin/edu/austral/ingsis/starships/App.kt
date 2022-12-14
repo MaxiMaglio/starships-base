@@ -357,11 +357,13 @@ class KeyPressedListener( private val game: Game,
                     val map = game.keyBoardConfig;
                     if (event.key == KeyCode.S && game.isPaused) game.saveGame()
                     when (event.key){
+                        //First player
                         map["accelerate-1"] -> game.moveShip("starship-1", true)
                         map["stop-1"] -> game.moveShip("starship-1", false)
                         map["rotate-left-1"] -> game.rotateShip("starship-1", -20.0)
                         map["rotate-right-1"] -> game.rotateShip("starship-1", 20.0)
                         map["shoot-1"] -> game.shoot("starship-1")
+                        //Second player
                         map["accelerate-2"] -> game.moveShip("starship-2", true)
                         map["stop-2"] -> game.moveShip("starship-2", false)
                         map["rotate-left-2"] -> game.rotateShip("starship-2", -20.0)

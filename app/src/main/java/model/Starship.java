@@ -5,6 +5,9 @@ import model.enums.Color;
 import model.enums.EntityShapeType;
 import model.enums.EntityType;
 
+import static config.Constants.SHIP_ACCELERATION;
+import static config.Constants.SHIP_MAX_BOOST;
+
 
 public class Starship extends Entity {
 
@@ -46,10 +49,10 @@ public class Starship extends Entity {
     }
 
     public Starship addBoost(){
-        if (boost < 1000){
+        if (boost < SHIP_MAX_BOOST){
             //boost keeps getting stronger
             return new Starship(getId(), getxPosition(), getyPosition(), getRotation(), getHeight(),getWidth(),getPlayerId(),getColor(),getLastBulletShot(), getDirection(),
-                    boost + 70, bulletType);
+                    boost + SHIP_ACCELERATION, bulletType);
         }
         return (Starship) getNewGameObject();
     }

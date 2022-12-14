@@ -20,13 +20,15 @@ public class Constants {
     public static final double SHIP_HEIGHT = 40;
     public static final double SHIP_WIDTH = 40;
     public static final double SHIP_DIRECTION = 180;
+    public static final double SHIP_MAX_BOOST = 1000;
+    public static final double SHIP_ACCELERATION = 70;
 
 
     //BULLET CONSTANTS
     public static int BULLET_COUNT = 0;
-    public static final int BULLET_DAMAGE = 10;
-    public static final int LASER_DAMAGE = 25;
-    public static final int ROCKET_DAMAGE = 50;
+    public static final int BULLET_DAMAGE = 25;
+    public static final int LASER_DAMAGE = 50;
+    public static final int ROCKET_DAMAGE = 75;
     public static final int SUPA_ROCKET_DAMAGE = 1000;
 
 
