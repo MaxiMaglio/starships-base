@@ -1,18 +1,15 @@
 package edu.austral.ingsis.starships
 
+import display.AlertBox
 import Game
-import config.Constants.GAME_HEIGHT
-import config.Constants.GAME_WIDTH
+import config.Constants.*
 import edu.austral.ingsis.starships.ui.*
 import edu.austral.ingsis.starships.ui.ElementColliderType.*
 import javafx.application.Application
 import javafx.application.Application.launch
-import javafx.event.ActionEvent
-import javafx.event.EventHandler
 import javafx.geometry.Pos
 import javafx.scene.Cursor
 import javafx.scene.Scene
-import javafx.scene.control.Button
 import javafx.scene.control.ChoiceBox
 import javafx.scene.control.Label
 import javafx.scene.input.KeyCode
@@ -20,6 +17,7 @@ import javafx.scene.layout.HBox
 import javafx.scene.layout.StackPane
 import javafx.scene.layout.VBox
 import javafx.scene.paint.Color.PURPLE
+import javafx.stage.Popup
 import javafx.stage.Stage
 import model.Bullet
 import model.Entity
@@ -91,6 +89,7 @@ class Starships : Application() {
     override fun stop() {
         facade.stop()
         keyTracker.stop()
+        AlertBox.display("Lidl Starships", "Gracias por jugar starships")
         exitProcess(0)
     }
 
@@ -168,6 +167,7 @@ class Starships : Application() {
 
 
 private fun menuScene(primaryStage: Stage, pane: StackPane): Scene {
+    primaryStage.title = "Lidl Starships"
     val title = Label("Starships")
     title.textFill = PURPLE
     title.style = "-fx-font-family: VT323; -fx-font-size: 100;"
@@ -307,8 +307,6 @@ fun pauseScene(primaryStage: Stage, pane: StackPane, menu: Scene): Scene {
     pause.stylesheets.add(this::class.java.classLoader.getResource("styles.css")?.toString())
     return pause
 }
-
-
     class TimeListener(
         private val elements: Map<String, ElementModel>,
         private val game: Game,
@@ -364,14 +362,14 @@ class KeyPressedListener( private val game: Game,
                         //First player
                         map["accelerate-1"] -> game.moveShip("starship-1", true)
                         map["stop-1"] -> game.moveShip("starship-1", false)
-                        map["rotate-left-1"] -> game.rotateShip("starship-1", -20.0)
-                        map["rotate-right-1"] -> game.rotateShip("starship-1", 20.0)
+                        map["rotate-left-1"] -> game.rotateShip("starship-1", -SHIP_ROTATION_NORMAL)
+                        map["rotate-right-1"] -> game.rotateShip("starship-1", SHIP_ROTATION_NORMAL)
                         map["shoot-1"] -> game.shoot("starship-1")
                         //Second player
                         map["accelerate-2"] -> game.moveShip("starship-2", true)
                         map["stop-2"] -> game.moveShip("starship-2", false)
-                        map["rotate-left-2"] -> game.rotateShip("starship-2", -20.0)
-                        map["rotate-right-2"] -> game.rotateShip("starship-2", 20.0)
+                        map["rotate-left-2"] -> game.rotateShip("starship-2", -SHIP_ROTATION_NORMAL)
+                        map["rotate-right-2"] -> game.rotateShip("starship-2", SHIP_ROTATION_NORMAL)
                         map["shoot-2"] -> game.shoot("starship-2")
                         KeyCode.P -> {
                             game.pauseOrResumeGame()

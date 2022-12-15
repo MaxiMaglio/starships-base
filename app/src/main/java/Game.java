@@ -194,6 +194,9 @@ public class Game {
             playerPoints.forEach((key, value) -> System.out.println(key + " = " + value + " points"));
         }
     }
+    public Map<String, Integer> getPlayerPoints(){
+        return playerPoints;
+    }
 
     public List<Entity> getEntities() {
         return gameState ==null ? null : gameState.getEntities();

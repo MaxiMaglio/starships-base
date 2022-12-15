@@ -16,6 +16,9 @@ public class Constants {
 
 
     //SHIP CONSTANTS
+
+    public static final double SHIP_ROTATION_NORMAL = 20;
+
     public static final double SHIP_ROTATION_Y = 180;
     public static final double SHIP_HEIGHT = 40;
     public static final double SHIP_WIDTH = 40;

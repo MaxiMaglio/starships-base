@@ -1,8 +1,10 @@
-id:starship-1;type:STARSHIP;xPosition:371.9922473301632;yPosition:279.4813436985303;rotation:140.0;direction:140.0;height:40.0;width:40.0;shape:TRIANGULAR;color:RED;lastBulletShot:1671029560796;playerId:player-0;boost:0.0;bulletType:SUPA_ROCKET
-id:meteor-22;type:ASTEROID;xPosition:87.25404584714377;yPosition:42.28229582417138;rotation:424.0;direction:60.32307168867543;height:73.45906503908283;width:129.52161871336838;shape:ELLIPTICAL;clockwise:true;initialHealthBar:95;currentHealthBar:95
-id:meteor-21;type:ASTEROID;xPosition:113.35537078897617;yPosition:366.1300271088864;rotation:-186.0;direction:117.76108874764176;height:55.80243371085737;width:134.7390510701357;shape:ELLIPTICAL;clockwise:false;initialHealthBar:75;currentHealthBar:75
-id:meteor-20;type:ASTEROID;xPosition:126.39809430255627;yPosition:456.1384643657342;rotation:-232.0;direction:118.77139140727584;height:104.25422438518277;width:129.7842454649497;shape:ELLIPTICAL;clockwise:false;initialHealthBar:135;currentHealthBar:135
-id:meteor-19;type:ASTEROID;xPosition:160.50027158830483;yPosition:328.43023279874075;rotation:-294.0;direction:104.65836201279474;height:134.72595014862003;width:97.29235996819307;shape:ELLIPTICAL;clockwise:false;initialHealthBar:131;currentHealthBar:131
-id:meteor-17;type:ASTEROID;xPosition:550.4253605906192;yPosition:205.91346394099742;rotation:-500.0;direction:-30.09643520425192;height:86.9551472243235;width:55.939763075295154;shape:ELLIPTICAL;clockwise:false;initialHealthBar:48;currentHealthBar:48
+id:starship-1;type:STARSHIP;xPosition:480.0;yPosition:300.0;rotation:180.0;direction:180.0;height:40.0;width:40.0;shape:TRIANGULAR;color:RED;lastBulletShot:1671130260080;playerId:player-0;boost:0.0;bulletType:SUPA_ROCKET
+id:starship-2;type:STARSHIP;xPosition:300.0;yPosition:300.0;rotation:180.0;direction:180.0;height:40.0;width:40.0;shape:TRIANGULAR;color:BLUE;lastBulletShot:1671130260081;playerId:player-1;boost:0.0;bulletType:SUPA_ROCKET
+id:meteor-9;type:ASTEROID;xPosition:316.4427128341936;yPosition:51.657715616931576;rotation:30.0;direction:10.277079172095931;height:56.39295535592642;width:66.61224875711096;shape:ELLIPTICAL;clockwise:false;initialHealthBar:37;currentHealthBar:37
+id:meteor-5;type:ASTEROID;xPosition:1396.1184725218513;yPosition:170.59675446350076;rotation:-722.0;direction:-57.290750479670834;height:82.32235447192699;width:130.06403422087539;shape:ELLIPTICAL;clockwise:false;initialHealthBar:107;currentHealthBar:107
+id:meteor-4;type:ASTEROID;xPosition:291.34343354373027;yPosition:398.3205938683999;rotation:1084.0;direction:112.95560774698737;height:103.94179163917171;width:131.59733301418987;shape:ELLIPTICAL;clockwise:true;initialHealthBar:136;currentHealthBar:136
+id:meteor-3;type:ASTEROID;xPosition:264.54753965639804;yPosition:713.29780496416;rotation:-726.0;direction:123.45992676783074;height:81.4483871356049;width:54.66055517830159;shape:ELLIPTICAL;clockwise:false;initialHealthBar:44;currentHealthBar:44
+id:meteor-1;type:ASTEROID;xPosition:947.9578643887729;yPosition:505.9374722490468;rotation:1090.0;direction:-155.50744531066132;height:84.3669217645952;width:66.22010167371556;shape:ELLIPTICAL;clockwise:true;initialHealthBar:55;currentHealthBar:55
 %
-id:player-0;points:834;lives:3;shipId:starship-1
+id:player-0;points:0;lives:3;shipId:starship-1
+id:player-1;points:0;lives:1;shipId:starship-2
