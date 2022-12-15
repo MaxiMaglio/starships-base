@@ -233,9 +233,6 @@ private fun menuScene(primaryStage: Stage, pane: StackPane): Scene {
 }
 
 
-
-
-
 fun pauseScene(primaryStage: Stage, pane: StackPane, menu: Scene): Scene {
     val resume = Label("Resume")
     resume.textFill = javafx.scene.paint.Color.BLUE
@@ -366,6 +363,12 @@ class KeyPressedListener( private val game: Game,
                         map["rotate-right-1"] -> game.rotateShip("starship-1", SHIP_ROTATION_NORMAL)
                         map["shoot-1"] -> game.shoot("starship-1")
                         //Second player
+                        map["accelerate-2"] -> game.moveShip("starship-2", true)
+                        map["stop-2"] -> game.moveShip("starship-2", false)
+                        map["rotate-left-2"] -> game.rotateShip("starship-2", -SHIP_ROTATION_NORMAL)
+                        map["rotate-right-2"] -> game.rotateShip("starship-2", SHIP_ROTATION_NORMAL)
+                        map["shoot-2"] -> game.shoot("starship-2")
+                        //Third player
                         map["accelerate-2"] -> game.moveShip("starship-2", true)
                         map["stop-2"] -> game.moveShip("starship-2", false)
                         map["rotate-left-2"] -> game.rotateShip("starship-2", -SHIP_ROTATION_NORMAL)
